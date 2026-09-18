@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Restricted to the two injected processes that actually touch the mach
+	     service, so no other process can register/lookup it (a hostile registrant
+	     could otherwise impersonate the provider). Same DEBUGGING NOTE as NextUp3's
+	     profile: a re-signed app install (TrollStore / sideload) can carry a
+	     DIFFERENT signing identifier than its bundle id. -->
+	<key>AllowedProcesses</key>
+	<array>
+		<string>com.spotify.client</string>
+		<string>com.apple.springboard</string>
+	</array>
+	<key>Extensions</key>
+	<array>
+		<dict>
+			<key>type</key>
+			<string>mach</string>
+			<key>extension_class</key>
+			<string>com.apple.security.exception.mach-register.global-name</string>
+			<key>mach_name</key>
+			<string>com.brkr1.tweaks.spotiqueue.svc.spotify</string>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>mach</string>
+			<key>extension_class</key>
+			<string>com.apple.security.exception.mach-lookup.global-name</string>
+			<key>mach_name</key>
+			<string>com.brkr1.tweaks.spotiqueue.svc.spotify</string>
+		</dict>
+	</array>
+</dict>
+</plist>
