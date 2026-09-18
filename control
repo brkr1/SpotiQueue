@@ -1,7 +1,7 @@
 Package: com.brkr1.tweaks.spotiqueue
 Name: SpotiQueue
 Depends: mobilesubstrate, com.opa334.libsandy
-Version: 0.1
+Version: 0.2
 Architecture: iphoneos-arm
 Description: See your whole Spotify queue, and jump to any track, remove or reorder, from the Lock Screen, Control Center and Dynamic Island.
 Maintainer: brkr1
