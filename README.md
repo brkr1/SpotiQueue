@@ -4,6 +4,9 @@ Shows your whole Spotify queue, not just the next track, in a sheet you can pull
 from the Lock Screen, Control Center or Dynamic Island. Tap any track to play it now,
 drag to reorder the queue, or swipe to remove one.
 
+<img width="480" height="1040" alt="SpotiQueue" src="https://github.com/user-attachments/assets/82378fe5-45d8-4c51-bdbd-94b778311ca3" />
+
+
 ## Features
 
 - Full up-next queue
