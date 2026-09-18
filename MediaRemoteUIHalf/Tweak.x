@@ -100,17 +100,6 @@ void SQButtonTapped(BOOL fromIsland) {
 // sibling view to anchor off there). Compact CC overrides with the row's own midX.
 static const CGFloat kSQButtonRightOffset = 64.0;
 
-// SpotiLoveReborn's heart button (♥/♡) is a sibling subview that's always correctly
-// positioned - borrow its actual Y instead of recomputing our own from scratch.
-static UIButton *SQFindSpotiLoveHeartButton(UIView *playerView) {
-    for (UIView *sub in [playerView.subviews copy]) {
-        if (![sub isKindOfClass:UIButton.class]) continue;
-        NSString *title = [(UIButton *)sub currentTitle];
-        if ([title isEqualToString:@"♥"] || [title isEqualToString:@"♡"]) return (UIButton *)sub;
-    }
-    return nil;
-}
-
 void SQLayoutMRUButton(MRUNowPlayingView *playerView) {
     if (!gSQMRUButton) return;
     CGSize fitSize = [gSQMRUButton sizeThatFits:CGSizeMake(100, 100)];
@@ -131,15 +120,11 @@ void SQLayoutMRUButton(MRUNowPlayingView *playerView) {
         center.x = CGRectGetMidX(transport.frame);
     }
 
-    // Y: prefer the heart button's own row on every surface, compact CC included -
-    // recomputing "just above the row" ourselves never quite matched its height.
-    UIButton *heart = SQFindSpotiLoveHeartButton(playerView);
-    if (heart != nil && !CGRectIsEmpty(heart.frame)) {
-        center.y = heart.center.y;
-    } else if (transport != nil && !CGRectIsEmpty(transport.frame)) {
-        // No SpotiLoveReborn installed - fall back to our own transport-relative math.
-        center.y = isCompactCC ? CGRectGetMinY(transport.frame) - height / 2.0 - 2
-                                : CGRectGetMidY(transport.frame);
+    // Derived straight from transportControlsView every call, same as SpotiLoveReborn's
+    // heart button - reading another tweak's already-rendered frame instead raced its own
+    // layoutSubviews hook during the lock screen's compact/full-screen transition.
+    if (transport != nil && !CGRectIsEmpty(transport.frame)) {
+        center.y = isCompactCC ? CGRectGetMinY(transport.frame) - 2 : CGRectGetMidY(transport.frame);
     }
 
     gSQMRUButton.frame = CGRectMake(center.x - width / 2.0, center.y - height / 2.0, width, height);
